@@ -52,15 +52,15 @@ const loginUsuario=async(req,res=response)=>{
     const {email,password}=req.body;
 
     try {
-        const usuarioDB=await Usuario.findOne({email});
-        if (!usuarioDB) {
+        const usuario=await Usuario.findOne({email});
+        if (!usuario) {
             return res.status(404).json({
                 ok:false,
                 msg:'Email No Encontrado'
             });
         }
 
-        const validPasswor=bcrypt.compareSync(password,usuarioDB.password);
+        const validPasswor=bcrypt.compareSync(password,usuario.password);
         if (!validPasswor) {
             return res.status(400).json({
                 ok:false,
@@ -69,11 +69,11 @@ const loginUsuario=async(req,res=response)=>{
         }
 
         //Generar JWT
-        const token=await generarJWT(usuarioDB.id);
+        const token=await generarJWT(usuario.id);
 
         res.json({
             ok:true,
-            usuarioDB,
+            usuario,
             token
         });
 

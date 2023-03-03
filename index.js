@@ -7,7 +7,7 @@ require('./database/config').dbConnection();
 
 // App de Express
 const app = express();
-
+ 
 
 //Lectura y parseo del body
 app.use(express.json());
